@@ -1,42 +1,41 @@
 package model;
 
-import java.awt.Color;
+import util.Color;
+import util.Dimension;
+import util.Position;
 
-public class Rectangle extends AShape {
-
-  double width;
-  double height;
+/**
+ * Represents a rectangle shape, which has a width and height.
+ */
+public final class Rectangle extends AShape {
+  private double width;
+  private double height;
 
   /**
-   * Create a object with basic attributes.
-   *
-   *
-   * @param color     represent the color of the object
+   * Create a rectangle shape.
+   * @param name      represents the name of the object
+   * @param color     represents the color of the object
    * @param speed     represents the moving speed per tick at x and y direction
-   * @param position  represent the position of the object
-   * @param dimension represents the background of the canvas
+   * @param position  represents the position of the object
+   * @param dimension represents the size of the object
+   * @param canvas    represents the canvas of the animation
    * @param tick      represents the tick rate per second
-   * @param width      represents the width of the rectangle
-   * @param height      represents the height of the rectangle
    * @throws IllegalArgumentException if the size of the rectangle exceed the canvas
    *          or the given value of width or height is less than 0
    */
   public Rectangle(String name, Color color, Speed speed, Position position, Dimension dimension,
-      double tick, double width, double height) throws IllegalArgumentException {
-    super(name, color, speed, position, dimension, tick);
-
-    // width or height is less than 0
-    if (width <= 0 || height <= 0) {
-      throw new IllegalArgumentException("The width and height of a rectangle should be positive");
-    }
-
-    // width or height greater than the canvas's width or height
-    if (this.width > this.dimension.getWidth() || this.height > this.dimension.getHeight()) {
-      throw new IllegalArgumentException("Object size cannot exceed the canvas");
-    }
+      Canvas canvas, double tick) throws IllegalArgumentException {
+    super(name, color, speed, position, dimension, canvas, tick);
+    this.width = dimension.getWidth();
+    this.height = dimension.getHeight();
   }
 
-  public void changeDimension(Dimension dimension) {
+  /**
+   * Sets the size of this rectangle.
+   * @param dimension     the dimension used to set width and height
+   */
+  @Override
+  public void changeSize(Dimension dimension) {
     this.width = dimension.getWidth();
     this.height = dimension.getHeight();
   }

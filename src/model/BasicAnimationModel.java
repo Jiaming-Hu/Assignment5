@@ -1,31 +1,65 @@
 package model;
 
-import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+import util.Color;
+import util.Dimension;
+import util.Position;
 
+/**
+ * Represents a basic implementation of IAnimationModel using IShape as the object type.
+ */
 public class BasicAnimationModel implements IAnimationModel<IShape> {
+  private final List<IShape> listOfShapes;
 
-  private List<IShape> listOfShapes;
+  /**
+   * Constructor for BasicAnimationModel class.
+   * @param shapes     list of shapes in this animation
+   */
+  public BasicAnimationModel(List<IShape> shapes) {
+    this.listOfShapes = shapes;
+  }
 
-    public BasicAnimationModel() {
+  /**
+   * Default constructor for BasicAnimationModel class. Sets listOfShapes to an empty list.
+   */
+  public BasicAnimationModel() {
+    this.listOfShapes = new ArrayList<>();
+  }
 
+  /**
+   * Retrieve the shape at given index in listOfShapes.
+   * @param index    index of shape
+   * @return         shape at given index
+   * @throws IllegalArgumentException    if index is out of bounds
+   */
+  private IShape getShape(int index) throws IllegalArgumentException {
+    try {
+      return this.listOfShapes.get(index);
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("Invalid index");
     }
+  }
 
-    public void move(int index, double x, double y) {
-        this.listOfShapes.get(index).updatePosition(x, y);
-    }
+  @Override
+  public void move(int index, Position position) {
+    getShape(index).updatePosition(position);
+  }
 
-    public void changeColor(int index, Color color) {
-      this.listOfShapes.get(index).changeColor(color);
-    }
+  @Override
+  public void changeColor(int index, Color color) {
+    getShape(index).changeColor(color);
+  }
 
-    public void changeSize(int index, Dimension dimension) {
-        this.listOfShapes.get(index).changeDimension(dimension);
-    }
+  @Override
+  public void changeSize(int index, Dimension dimension) {
+    getShape(index).changeSize(dimension);
+  }
 
-    public void addObject(IShape shape) {
-        int length =listOfShapes.size();
-        listOfShapes.add(length, shape);
-    }
+  @Override
+  public void addObject(IShape shape) {
+    int length =listOfShapes.size();
+    listOfShapes.add(length, shape);
+  }
 
 }
