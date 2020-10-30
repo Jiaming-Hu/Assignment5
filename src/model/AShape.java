@@ -1,8 +1,11 @@
 package model;
-import java.awt.Color;
+
+import util.Color;
+import util.Dimension;
+import util.Position;
 
 /**
- * An abstract class of object.
+ * An abstract class of shape.
  */
 public abstract class AShape implements IShape {
   protected String name;
@@ -10,21 +13,22 @@ public abstract class AShape implements IShape {
   protected Speed speed;
   protected Position position;
   protected Dimension dimension;
+  protected Canvas canvas;
   protected double tick;
 
   /**
    * Create a object with basic attributes.
    *
-   * @param name represent the name of the model
-   * @param color represent the color of the object
+   * @param name represents the name of the model
+   * @param color represents the color of the object
    * @param speed represents the moving speed per tick at x and y direction
-   * @param position represent the position of the object
+   * @param position represents the position of the object
    * @param dimension represents the background of the canvas
    * @param tick represents the tick rate per second
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException   if the tick is negative
    */
   public AShape(String name, Color color, Speed speed, Position position, Dimension dimension,
-      double tick) throws IllegalArgumentException {
+      Canvas canvas, double tick) throws IllegalArgumentException {
 
     if (tick < 0) {
       throw new IllegalArgumentException("The given tick value is invalid");
@@ -35,46 +39,33 @@ public abstract class AShape implements IShape {
     this.speed = speed;
     this.position = position;
     this.dimension = dimension;
+    this.canvas = canvas;
     this.tick = tick;
   }
   
-  
+  @Override
   public Position getPosition() {
-    return this.position;
-  }
-  
-  public Color getColor() {
-    return this.color;
-  }
-  
-  public void updatePosition(double x, double y) {
-    Position newPosition = new Position(this.position.getX() + x,
-        this.position.getY() + y);
+    return new Position(this.position.getX(), this.position.getY());
   }
 
+  @Override
+  public Color getColor() {
+    return new Color(this.color.getR(), this.color.getG(), this.color.getB());
+  }
+
+  @Override
+  public void updatePosition(Position pos) {
+    Position newPosition = new Position(this.position.getX() + pos.getX(),
+        this.position.getY() + pos.getY());
+  }
+
+  @Override
   public void changeColor(Color c) {
     this.color = c;
   }
-  
-  abstract void changeDimension(Dimension dimension);
 
-  /**
-   * Methods :
-   *
-   * getPosition
-   * getColor
-   *
-   * void methods :
-   *
-   * move(double x, double y, ) -- update the position
-   * changeColor(int r, int g, int b)
-   *
-   *
-   *
-   *
-   *
-   */
-
+  @Override
+  public abstract void changeSize(Dimension dimension);
 
 
 }
