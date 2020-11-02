@@ -12,12 +12,11 @@ AShape - abstract class implementing IShape
 Rectangle - class representing a rectangle shape, extends AShape
 Circle - class representing a circle shape, extends AShape
 
-Canvas - class representing the background of an animation
-
-Speed - class ... TBD
-
 
 In util package:
+
 Color - class representing a color
 Dimension - class representing a dimension (size)
 Position - class representing a position on x-y plane
+ActionPeriod - class representing a time period of an action
+Action - class representing a change of an object in the animation
